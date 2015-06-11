@@ -197,8 +197,8 @@
     (try
       (loop []
         (let [key (.take watcher)]
-          (callback)
-          (.pollEvents key)
+          (when (.endsWith (-> ev .pollEvents .context .toString) ".less")
+            (callback))
           (.reset key)
           (recur)))
       (catch InterruptedException ex
